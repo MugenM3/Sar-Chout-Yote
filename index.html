@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Digital Agronomist - Home</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="theme-color" content="#1a1c1a">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-512.png">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top App Bar -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="profile-section">
+                    <img src="https://ui-avatars.com/api/?name=Farmer+John&background=10b981&color=fff&rounded=true" alt="Profile" class="profile-img">
+                    <div class="greeting">
+                        <span class="greeting-text">Good Morning,</span>
+                        <h1 class="user-name">John Doe</h1>
+                    </div>
+                </div>
+                <button class="notification-btn">
+                    <i data-lucide="bell"></i>
+                    <span class="badge">3</span>
+                </button>
+            </div>
+            
+            <!-- Quick Stats / Weather Widget Embedded in Header -->
+            <div class="header-widget">
+                <div class="weather-info">
+                    <i data-lucide="sun-medium" class="weather-icon"></i>
+                    <div>
+                        <div class="temp">24°C</div>
+                        <div class="condition">Sunny, Optimal for planting</div>
+                    </div>
+                </div>
+                <div class="date-info">
+                    Oct 24, 2026
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Scrollable Area -->
+        <main class="app-content">
+            <!-- Search/Action Bar -->
+            <div class="search-container">
+                <i data-lucide="search" class="search-icon"></i>
+                <input type="text" placeholder="Search crops, tasks, or insights..." class="search-input">
+                <button class="filter-btn">
+                    <i data-lucide="sliders-horizontal"></i>
+                </button>
+            </div>
+
+            <!-- Dashboard Overview Card -->
+            <section class="overview-section">
+                <div class="section-header">
+                    <h2>Farm Health Overlay</h2>
+                    <a href="farm_dashboard/code.html" class="see-all">View Dash</a>
+                </div>
+                <div class="glass-card overview-card" onclick="window.location.href='farm_dashboard/code.html'">
+                    <div class="overview-stats">
+                        <div class="stat">
+                            <span class="stat-value">92%</span>
+                            <span class="stat-label">Crop Health</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat">
+                            <span class="stat-value">4.2ha</span>
+                            <span class="stat-label">Irrigated</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat">
+                            <span class="stat-value">3</span>
+                            <span class="stat-label">Tasks</span>
+                        </div>
+                    </div>
+                    <div class="overview-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 92%"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3-Column Feature Grid -->
+            <section class="features-section">
+                <div class="section-header">
+                    <h2>Core Features</h2>
+                </div>
+                <div class="feature-grid">
+                    <a href="farm_dashboard/code.html" class="grid-item">
+                        <div class="icon-wrapper bg-green-light">
+                            <i data-lucide="layout-dashboard" class="text-green"></i>
+                        </div>
+                        <span class="item-label">Dashboard</span>
+                    </a>
+                    
+                    <a href="ai_scanner/code.html" class="grid-item">
+                        <div class="icon-wrapper bg-primary">
+                            <i data-lucide="scan-line" class="text-white"></i>
+                        </div>
+                        <span class="item-label">AI Scanner</span>
+                    </a>
+                    
+                    <a href="ai_insights_hub/code.html" class="grid-item">
+                        <div class="icon-wrapper bg-grey-light">
+                            <i data-lucide="brain-circuit" class="text-grey-dark"></i>
+                        </div>
+                        <span class="item-label">Insights</span>
+                    </a>
+                    
+                    <a href="ai_diagnosis_solution/code.html" class="grid-item">
+                        <div class="icon-wrapper bg-red-light">
+                            <i data-lucide="stethoscope" class="text-red"></i>
+                        </div>
+                        <span class="item-label">Diagnosis</span>
+                    </a>
+                    
+                    <a href="weather_forecast/code.html" class="grid-item">
+                        <div class="icon-wrapper bg-blue-light">
+                            <i data-lucide="cloud-rain" class="text-blue"></i>
+                        </div>
+                        <span class="item-label">Weather</span>
+                    </a>
+                    
+                    <a href="terraform_pro/code.html" class="grid-item">
+                        <div class="icon-wrapper bg-purple-light">
+                            <i data-lucide="map" class="text-purple"></i>
+                        </div>
+                        <span class="item-label">Terraform Pro</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="activity-section">
+                <div class="section-header">
+                    <h2>Recent Activity</h2>
+                </div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon bg-green-light">
+                            <i data-lucide="sprout" class="text-green"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Nitrogen level check</h4>
+                            <p>Field A • All clear</p>
+                        </div>
+                        <span class="activity-time">2h ago</span>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon bg-red-light">
+                            <i data-lucide="alert-circle" class="text-red"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Pest detection</h4>
+                            <p>North Sector • AI Scanner</p>
+                        </div>
+                        <span class="activity-time">5h ago</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active">
+                <i data-lucide="home"></i>
+                <span>Home</span>
+            </a>
+            <a href="ai_insights_hub/code.html" class="nav-item">
+                <i data-lucide="bar-chart-2"></i>
+                <span>Reports</span>
+            </a>
+            <!-- Floating Action Button effect -->
+            <div class="nav-item fab-container">
+                <a href="ai_scanner/code.html" class="fab">
+                    <i data-lucide="camera"></i>
+                </a>
+            </div>
+            <a href="weather_forecast/code.html" class="nav-item">
+                <i data-lucide="cloud"></i>
+                <span>Weather</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i data-lucide="user"></i>
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').then(registration => {
+                    console.log('SW registered: ', registration);
+                }).catch(registrationError => {
+                    console.log('SW registration failed: ', registrationError);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

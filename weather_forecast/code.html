@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Weather Forecast - Digital Agronomist</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error": "#ffffff",
+              "surface-container-high": "#e7e8e9",
+              "secondary-fixed-dim": "#94ccff",
+              "tertiary-fixed": "#ffdea9",
+              "primary-fixed-dim": "#a0d3a5",
+              "on-secondary-container": "#004972",
+              "on-tertiary-fixed-variant": "#5e4100",
+              "surface-container-highest": "#e1e3e4",
+              "secondary": "#006399",
+              "background": "#f8f9fa",
+              "on-surface-variant": "#40493d",
+              "surface-variant": "#e1e3e4",
+              "surface-container-lowest": "#ffffff",
+              "on-primary": "#ffffff",
+              "on-primary-container": "#cafece",
+              "on-primary-fixed": "#00210a",
+              "surface-bright": "#f8f9fa",
+              "outline": "#707a6c",
+              "primary-fixed": "#bcefc0",
+              "on-tertiary-container": "#ffefd9",
+              "on-error-container": "#93000a",
+              "tertiary": "#714f00",
+              "surface": "#f8f9fa",
+              "surface-tint": "#3a6843",
+              "tertiary-container": "#906600",
+              "on-secondary-fixed-variant": "#004b74",
+              "outline-variant": "#bfcaba",
+              "primary": "#315f3b",
+              "on-background": "#191c1d",
+              "primary-container": "#497851",
+              "error": "#ba1a1a",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed-dim": "#ffba27",
+              "surface-container": "#edeeef",
+              "inverse-on-surface": "#f0f1f2",
+              "inverse-primary": "#a0d3a5",
+              "surface-dim": "#d9dadb",
+              "error-container": "#ffdad6",
+              "secondary-container": "#67bafd",
+              "secondary-fixed": "#cde5ff",
+              "on-tertiary-fixed": "#271900",
+              "inverse-surface": "#2e3132",
+              "on-surface": "#191c1d",
+              "on-primary-fixed-variant": "#22502d",
+              "surface-container-low": "#f3f4f5",
+              "on-secondary-fixed": "#001d32",
+              "on-tertiary": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Public Sans"],
+              "label": ["Public Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface selection:bg-primary-fixed">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center px-6 py-3 w-full">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant/20">
+<img class="w-full h-full object-cover" data-alt="professional portrait of a middle-aged agronomist in a field setting with soft natural morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_mj3drXRNQNr5hu2M9o_HC9S7LJbJrJtPC4sBfHgFOzCXQxNk-evVD_KH2dkzHaVzfPQpeMbxHQ3-BybEH7F9J74D8ug4NC20mdNaX9VjRtT96Ngi2iOKzeI7bGO9cbn_6wTmPg6YGxA_0ufxcF7wRC5bbql16cstWKjvJ1ZWwTdmVv-3NPdvpDaNLrWdYUvZhIRTwV3PSNP_FR4mTWqhJx2D1ICidWOZSyKFGQpOzTO9Vgd4ojtx-eX6qk0ycvsXsJBmpV-govs"/>
+</div>
+<h1 class="font-manrope font-bold text-lg tracking-tight text-emerald-900 dark:text-emerald-50">Digital Agronomist</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-emerald-800 dark:text-emerald-400 p-2 rounded-full hover:bg-emerald-50 transition-colors">notifications</button>
+</div>
+</div>
+<div class="bg-slate-200/50 dark:bg-slate-800/50 h-px w-full"></div>
+</header>
+<main class="pt-20 pb-28 px-4 md:px-8 max-w-5xl mx-auto space-y-6">
+<!-- Severe Weather Alert Banner -->
+<div class="bg-error-container text-on-error-container p-4 rounded-xl flex items-start gap-4 shadow-sm border border-error/10">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+<div class="flex-1">
+<p class="font-bold text-sm">Frost Alert: Incoming Cold Front</p>
+<p class="text-xs opacity-90 mt-0.5">Temperatures expected to drop below 2°C tonight. Protect sensitive young crops.</p>
+</div>
+<button class="material-symbols-outlined text-sm">close</button>
+</div>
+<!-- Hero Weather Section (Asymmetric Bento) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Main Weather Card -->
+<div class="md:col-span-2 relative overflow-hidden rounded-xl bg-secondary-container/30 backdrop-blur-sm p-8 flex flex-col justify-between min-h-[320px]">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-[12rem]" style="font-variation-settings: 'FILL' 1;">wb_sunny</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 text-secondary font-semibold uppercase tracking-widest text-xs mb-2">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span>Central Valley Sector A-4</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-7xl font-headline font-extrabold text-on-surface">24°</span>
+<span class="text-2xl font-headline font-medium text-on-surface-variant">Sunny</span>
+</div>
+</div>
+<div class="relative z-10 bg-surface-container-lowest/80 p-5 rounded-xl border border-white/50 shadow-sm mt-8">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-sm" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<h3 class="font-headline font-bold text-primary italic">Farmer's Insight</h3>
+</div>
+<p class="text-on-surface-variant font-medium leading-relaxed">
+                        High solar radiation and low wind detected. <span class="text-primary font-bold underline decoration-primary-fixed-dim underline-offset-4">Perfect for controlled irrigation</span> between 10:00 AM and 2:00 PM to maximize absorption.
+                    </p>
+</div>
+</div>
+<!-- Detailed Metrics Side Grid -->
+<div class="space-y-4">
+<div class="bg-surface-container-low p-6 rounded-xl flex flex-col justify-center gap-1">
+<div class="flex items-center gap-2 text-on-surface-variant mb-2">
+<span class="material-symbols-outlined text-secondary">water_drop</span>
+<span class="text-xs font-bold uppercase tracking-wider">Soil Moisture</span>
+</div>
+<div class="text-3xl font-headline font-bold text-on-surface">42%</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-2">
+<div class="bg-primary h-full rounded-full w-[42%]"></div>
+</div>
+<p class="text-[10px] text-primary mt-2 font-bold uppercase">Optimal Range</p>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl flex flex-col justify-center gap-1">
+<div class="flex items-center gap-2 text-on-surface-variant mb-2">
+<span class="material-symbols-outlined text-tertiary">wb_sunny</span>
+<span class="text-xs font-bold uppercase tracking-wider">UV Index</span>
+</div>
+<div class="text-3xl font-headline font-bold text-on-surface">8 <span class="text-sm font-medium text-on-surface-variant">Very High</span></div>
+<p class="text-[10px] text-on-surface-variant mt-2">Peak expected at 1:30 PM</p>
+</div>
+</div>
+</section>
+<!-- 24-Hour Forecast (Horizontal Scroll) -->
+<section class="space-y-4">
+<h2 class="font-headline font-bold text-on-surface text-lg">Next 24 Hours</h2>
+<div class="flex gap-4 overflow-x-auto pb-4 hide-scrollbar">
+<!-- Hour Card (Active) -->
+<div class="flex-shrink-0 w-24 bg-primary text-on-primary p-4 rounded-xl flex flex-col items-center justify-between gap-3 shadow-md">
+<span class="text-xs font-bold">Now</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">wb_sunny</span>
+<span class="text-xl font-bold">24°</span>
+</div>
+<!-- Hour Card -->
+<div class="flex-shrink-0 w-24 bg-surface-container-low p-4 rounded-xl flex flex-col items-center justify-between gap-3">
+<span class="text-xs font-medium text-on-surface-variant">13:00</span>
+<span class="material-symbols-outlined text-on-surface-variant">partly_cloudy_day</span>
+<span class="text-xl font-bold text-on-surface">26°</span>
+</div>
+<!-- Hour Card -->
+<div class="flex-shrink-0 w-24 bg-surface-container-low p-4 rounded-xl flex flex-col items-center justify-between gap-3">
+<span class="text-xs font-medium text-on-surface-variant">14:00</span>
+<span class="material-symbols-outlined text-on-surface-variant">wb_sunny</span>
+<span class="text-xl font-bold text-on-surface">27°</span>
+</div>
+<!-- Hour Card -->
+<div class="flex-shrink-0 w-24 bg-surface-container-low p-4 rounded-xl flex flex-col items-center justify-between gap-3">
+<span class="text-xs font-medium text-on-surface-variant">15:00</span>
+<span class="material-symbols-outlined text-secondary">cloudy_snowing</span>
+<span class="text-xl font-bold text-on-surface">25°</span>
+</div>
+<!-- Hour Card -->
+<div class="flex-shrink-0 w-24 bg-surface-container-low p-4 rounded-xl flex flex-col items-center justify-between gap-3">
+<span class="text-xs font-medium text-on-surface-variant">16:00</span>
+<span class="material-symbols-outlined text-on-surface-variant">cloud</span>
+<span class="text-xl font-bold text-on-surface">23°</span>
+</div>
+<!-- Hour Card -->
+<div class="flex-shrink-0 w-24 bg-surface-container-low p-4 rounded-xl flex flex-col items-center justify-between gap-3">
+<span class="text-xs font-medium text-on-surface-variant">17:00</span>
+<span class="material-symbols-outlined text-on-surface-variant">cloud</span>
+<span class="text-xl font-bold text-on-surface">21°</span>
+</div>
+<!-- Hour Card -->
+<div class="flex-shrink-0 w-24 bg-surface-container-low p-4 rounded-xl flex flex-col items-center justify-between gap-3">
+<span class="text-xs font-medium text-on-surface-variant">18:00</span>
+<span class="material-symbols-outlined text-on-surface-variant">bedtime</span>
+<span class="text-xl font-bold text-on-surface">19°</span>
+</div>
+</div>
+</section>
+<!-- 7-Day Forecast & Wind (Asymmetric split) -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-4">
+<h2 class="font-headline font-bold text-on-surface text-lg">Weekly Outlook</h2>
+<div class="bg-surface-container-low rounded-xl overflow-hidden">
+<!-- Day Row -->
+<div class="flex items-center justify-between px-6 py-4 hover:bg-surface-container-high transition-colors">
+<span class="w-20 font-bold text-on-surface">Tomorrow</span>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">partly_cloudy_day</span>
+<span class="text-xs text-secondary font-bold w-8">15%</span>
+</div>
+<div class="flex gap-4">
+<span class="font-bold text-on-surface">22°</span>
+<span class="text-on-surface-variant opacity-60">12°</span>
+</div>
+</div>
+<!-- Day Row -->
+<div class="flex items-center justify-between px-6 py-4 hover:bg-surface-container-high transition-colors">
+<span class="w-20 font-bold text-on-surface">Wed</span>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">rainy</span>
+<span class="text-xs text-secondary font-bold w-8">80%</span>
+</div>
+<div class="flex gap-4">
+<span class="font-bold text-on-surface">18°</span>
+<span class="text-on-surface-variant opacity-60">10°</span>
+</div>
+</div>
+<!-- Day Row -->
+<div class="flex items-center justify-between px-6 py-4 hover:bg-surface-container-high transition-colors">
+<span class="w-20 font-bold text-on-surface">Thu</span>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">cloud</span>
+<span class="text-xs text-secondary font-bold w-8">10%</span>
+</div>
+<div class="flex gap-4">
+<span class="font-bold text-on-surface">21°</span>
+<span class="text-on-surface-variant opacity-60">11°</span>
+</div>
+</div>
+<!-- Day Row -->
+<div class="flex items-center justify-between px-6 py-4 hover:bg-surface-container-high transition-colors">
+<span class="w-20 font-bold text-on-surface">Fri</span>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">wb_sunny</span>
+<span class="text-xs text-secondary font-bold w-8">0%</span>
+</div>
+<div class="flex gap-4">
+<span class="font-bold text-on-surface">25°</span>
+<span class="text-on-surface-variant opacity-60">14°</span>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<h2 class="font-headline font-bold text-on-surface text-lg">Wind &amp; Conditions</h2>
+<div class="bg-surface-container-low p-6 rounded-xl space-y-6">
+<div class="flex justify-between items-center">
+<div class="flex gap-4 items-center">
+<div class="w-12 h-12 bg-surface-container-lowest rounded-full flex items-center justify-center text-primary-container shadow-sm">
+<span class="material-symbols-outlined">air</span>
+</div>
+<div>
+<p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Wind Speed</p>
+<p class="text-2xl font-headline font-extrabold">12 km/h</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-xs font-bold text-on-surface-variant uppercase">Direction</span>
+<p class="font-bold text-primary">NW</p>
+</div>
+</div>
+<div class="flex gap-4 items-center">
+<div class="w-12 h-12 bg-surface-container-lowest rounded-full flex items-center justify-center text-secondary shadow-sm">
+<span class="material-symbols-outlined">humidity_percentage</span>
+</div>
+<div>
+<p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Humidity</p>
+<p class="text-2xl font-headline font-extrabold">64%</p>
+</div>
+</div>
+<div class="flex gap-4 items-center">
+<div class="w-12 h-12 bg-surface-container-lowest rounded-full flex items-center justify-center text-tertiary-container shadow-sm">
+<span class="material-symbols-outlined">compress</span>
+</div>
+<div>
+<p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Pressure</p>
+<p class="text-2xl font-headline font-extrabold">1014 hPa</p>
+</div>
+</div>
+</div>
+<div class="relative rounded-xl overflow-hidden aspect-video bg-surface-container-low group">
+<img class="w-full h-full object-cover" data-alt="high resolution satellite radar map showing green and yellow precipitation clouds moving across a lush agricultural landscape" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvM_fN66Z9lNCA7TMeYVHs37kcVQvu0wV17Z6u9vnZRrYmuuWzvuWvCG5B5Wz6QYEM2RInSlRxBAy2ECsZEDUKMwX5LHqIkv7g10KG6pIsECNFJWxSOG1m3b5ho6pEoZ1RLV_9sdSdRJR_ae_oV-ripfhS1600OobSDcJlhbzDqfy1biaW2hjFsy0RJ9vzKYNxAU-ucry8UGsICdtc9OyvwdVwWYkvL3UyIoMujc-ZIzs6E2AsXBzU-zXDwcEzN4zGfJ1SuoylosY"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/60 to-transparent flex items-end p-4">
+<button class="bg-surface-container-lowest text-on-surface text-xs font-bold py-2 px-4 rounded-full flex items-center gap-2 shadow-lg">
+<span class="material-symbols-outlined text-sm">map</span>
+                            Open Radar Map
+                        </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-2xl border-t border-slate-100 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 backdrop-blur-lg shadow-[0_-4px_24px_rgba(25,28,29,0.04)]">
+<div class="flex justify-around items-center w-full px-2 pb-6 pt-2">
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-3 py-1.5 hover:text-emerald-700 dark:hover:text-emerald-300 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">agriculture</span>
+<span class="font-public-sans text-[11px] font-medium tracking-wide uppercase">Fields</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-emerald-100/50 dark:bg-emerald-900/40 text-emerald-900 dark:text-emerald-100 rounded-xl px-3 py-1.5 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">wb_sunny</span>
+<span class="font-public-sans text-[11px] font-medium tracking-wide uppercase">Weather</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-3 py-1.5 hover:text-emerald-700 dark:hover:text-emerald-300 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">center_focus_strong</span>
+<span class="font-public-sans text-[11px] font-medium tracking-wide uppercase">Scan</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-3 py-1.5 hover:text-emerald-700 dark:hover:text-emerald-300 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-public-sans text-[11px] font-medium tracking-wide uppercase">Insights</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-3 py-1.5 hover:text-emerald-700 dark:hover:text-emerald-300 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-public-sans text-[11px] font-medium tracking-wide uppercase">Settings</span>
+</a>
+</div>
+</nav>
+</body></html>

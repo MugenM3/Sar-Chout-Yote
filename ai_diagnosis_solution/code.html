@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Diagnosis Result | Digital Agronomist</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Public+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface": "#191c1d",
+              "secondary-container": "#67bafd",
+              "surface-dim": "#d9dadb",
+              "surface-container": "#edeeef",
+              "primary": "#315f3b",
+              "on-tertiary-fixed": "#271900",
+              "surface-bright": "#f8f9fa",
+              "tertiary-fixed": "#ffdea9",
+              "surface-container-low": "#f3f4f5",
+              "surface-container-highest": "#e1e3e4",
+              "surface-container-high": "#e7e8e9",
+              "inverse-primary": "#a0d3a5",
+              "secondary-fixed-dim": "#94ccff",
+              "secondary-fixed": "#cde5ff",
+              "on-surface-variant": "#40493d",
+              "tertiary-fixed-dim": "#ffba27",
+              "on-primary-fixed": "#00210a",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary-container": "#ffefd9",
+              "surface": "#f8f9fa",
+              "on-error": "#ffffff",
+              "tertiary-container": "#906600",
+              "error": "#ba1a1a",
+              "on-primary-fixed-variant": "#22502d",
+              "surface-variant": "#e1e3e4",
+              "primary-container": "#497851",
+              "on-secondary-container": "#004972",
+              "on-tertiary": "#ffffff",
+              "on-secondary-fixed-variant": "#004b74",
+              "inverse-surface": "#2e3132",
+              "on-tertiary-fixed-variant": "#5e4100",
+              "on-primary": "#ffffff",
+              "on-error-container": "#93000a",
+              "error-container": "#ffdad6",
+              "on-primary-container": "#cafece",
+              "on-secondary": "#ffffff",
+              "outline": "#707a6c",
+              "tertiary": "#714f00",
+              "inverse-on-surface": "#f0f1f2",
+              "background": "#f8f9fa",
+              "on-secondary-fixed": "#001d32",
+              "on-background": "#191c1d",
+              "surface-tint": "#3a6843",
+              "primary-fixed-dim": "#a0d3a5",
+              "outline-variant": "#bfcaba",
+              "secondary": "#006399",
+              "primary-fixed": "#bcefc0"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Public Sans"],
+              "label": ["Public Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        font-family: 'Public Sans', sans-serif;
+        background-color: #f8f9fa;
+        color: #191c1d;
+      }
+      .glass-effect {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center px-6 py-3 w-full">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-highest">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Close-up portrait of a professional agronomist with a friendly smile, outdoor lighting, soft natural background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFNOm8-ymqKYEl-XHHU8uHBI3hrAS9GjYQZVAqrvFWagOixbJSfLPcC0X7BNv_PQwhX6f515xvHfPvQRKqeCPTcyu80f1kszK1TI7ri-ey9A3SYzHrnTb-k9NfCwkv5xg1KDSHlxT0d5Ty6Xjey07aE6izweLCkNSjMTJWbF2l3RPrFBKR4RYGFor6xIXPE6shIYGXp1ZW4FvRH9pd741g0Z3WERdquPeIx-xHU0sMhGOEIzIJGOwzliEJKnYB_TBRhrrWSW5J6Xw"/>
+</div>
+<span class="font-manrope font-bold text-lg tracking-tight text-emerald-900 dark:text-emerald-50">Digital Agronomist</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-slate-600 dark:text-slate-400 p-2 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors rounded-full active:scale-95 duration-200">notifications</button>
+</div>
+</div>
+<div class="bg-slate-200/50 dark:bg-slate-800/50 h-px w-full"></div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-20 pb-28 px-6 max-w-4xl mx-auto w-full">
+<!-- Result Hero Section (Asymmetric Layout) -->
+<section class="mb-12">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
+<div class="md:col-span-7">
+<div class="inline-flex items-center px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed rounded-full text-xs font-bold uppercase tracking-widest mb-4">
+<span class="material-symbols-outlined text-[14px] mr-1" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Analysis Complete
+                    </div>
+<h1 class="font-headline font-extrabold text-4xl md:text-5xl text-on-surface leading-tight mb-2">Tomato Late Blight</h1>
+<p class="text-on-surface-variant text-lg leading-relaxed max-w-md">Detected on <span class="font-semibold text-primary">Field A-12</span>. Symptoms indicate early stage fungal proliferation.</p>
+</div>
+<div class="md:col-span-5 flex md:justify-end">
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm w-full md:w-auto text-center border-l-4 border-primary">
+<div class="text-5xl font-extrabold font-headline text-primary mb-1">94<span class="text-2xl">%</span></div>
+<div class="text-on-surface-variant text-sm font-medium uppercase tracking-wide">AI Confidence</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Image Analysis Card (Tonal Layering) -->
+<div class="mb-12 rounded-2xl overflow-hidden bg-surface-container-low p-1">
+<div class="relative aspect-video rounded-xl overflow-hidden shadow-inner bg-surface-dim">
+<img alt="Scanned Tomato Leaf" class="w-full h-full object-cover" data-alt="Extreme close-up of a tomato leaf showing dark irregular water-soaked spots typical of late blight fungal infection" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO1R9HJphutZETlUusDqShBcqq5QpUL-YQsI1aDclIt_HeCSdy6OeWzBqCBnUX3OWs6fukfci6y-S7rU6W-frkvrg5HpgwV79Ym6DnegHmlEarAjqznGYoqo6EG1aMncprLG4LcglgSBO4_XliDCnG5-shX-p7_O3cUYhQwdGWR7Jeeu193xLIzPmXcBD_Q8DTP8oaBjJI4LADNCCu8z8YwsyNc3B558Eq17dlpTM_9_s8MbfGhfbCZHAkKWCU7QNsF3HOgNRBW5Q"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+<div class="absolute bottom-4 left-4 flex gap-2">
+<span class="px-3 py-1 glass-effect bg-white/20 text-white rounded-full text-xs font-medium backdrop-blur-md border border-white/10">Infestation Zone</span>
+<span class="px-3 py-1 glass-effect bg-white/20 text-white rounded-full text-xs font-medium backdrop-blur-md border border-white/10">Early Detection</span>
+</div>
+</div>
+</div>
+<!-- AI Solutions: Priority List -->
+<section class="mb-12">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary text-3xl">psychology</span>
+<h2 class="font-headline font-bold text-2xl text-on-surface">AI Solutions</h2>
+</div>
+<!-- Solutions Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Action 1: High Priority -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0_4px_24px_rgba(25,28,29,0.04)] hover:shadow-md transition-shadow duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined">content_cut</span>
+</div>
+<span class="text-[10px] font-bold text-primary bg-primary/5 px-2 py-1 rounded uppercase tracking-tighter">Immediate</span>
+</div>
+<h3 class="font-headline font-bold text-lg mb-2">Prune Infected Foliage</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-4">Remove all leaves with brown lesions immediately. Do not compost these; burn or dispose of them away from fields.</p>
+</div>
+<!-- Action 2 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0_4px_24px_rgba(25,28,29,0.04)]">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-secondary/10 text-secondary rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined">water_drop</span>
+</div>
+</div>
+<h3 class="font-headline font-bold text-lg mb-2">Adjust Irrigation</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-4">Switch to drip irrigation. Ensure foliage remains dry during the morning to prevent fungal spore germination.</p>
+</div>
+<!-- Action 3 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0_4px_24px_rgba(25,28,29,0.04)]">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-tertiary-container/10 text-tertiary rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+</div>
+<h3 class="font-headline font-bold text-lg mb-2">Copper-Based Fungicide</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-4">Apply an organic copper spray to remaining healthy plants to prevent further spread of the blight.</p>
+</div>
+<!-- Action 4 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0_4px_24px_rgba(25,28,29,0.04)]">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-surface-container-highest text-on-surface-variant rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined">air</span>
+</div>
+</div>
+<h3 class="font-headline font-bold text-lg mb-2">Increase Airflow</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-4">Widen the spacing between tomato cages to reduce humidity levels within the crop canopy.</p>
+</div>
+</div>
+</section>
+<!-- Talk to AI Expert CTA -->
+<section class="mt-8 mb-20">
+<button class="w-full py-5 px-8 rounded-xl bg-gradient-to-br from-primary to-primary-container text-on-primary font-manrope font-bold text-lg shadow-lg flex items-center justify-center gap-3 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined">smart_toy</span>
+                Talk to AI Expert
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="text-center text-on-surface-variant text-xs mt-4 font-medium italic">Ask for dosage details or application schedules.</p>
+</section>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-2xl bg-white/90 dark:bg-slate-950/90 backdrop-blur-lg shadow-[0_-4px_24px_rgba(25,28,29,0.04)] border-t border-slate-100 dark:border-slate-800">
+<div class="flex justify-around items-center w-full px-2 pb-6 pt-2">
+<!-- Fields -->
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-3 py-1.5 hover:text-emerald-700 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined mb-1">agriculture</span>
+<span class="font-public-sans text-[11px] font-medium tracking-wide uppercase">Fields</span>
+</a>
+<!-- Weather -->
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-3 py-1.5 hover:text-emerald-700 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined mb-1">wb_sunny</span>
+<span class="font-public-sans text-[11px] font-medium tracking-wide uppercase">Weather</span>
+</a>
+<!-- Scan (Active) -->
+<a class="flex flex-col items-center justify-center bg-emerald-100/50 dark:bg-emerald-900/40 text-emerald-900 dark:text-emerald-100 rounded-xl px-4 py-2 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">center_focus_strong</span>
+<span class="font-public-sans text-[11px] font-bold tracking-wide uppercase">Scan</span>
+</a>
+<!-- Insights -->
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-3 py-1.5 hover:text-emerald-700 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined mb-1">psychology</span>
+<span class="font-public-sans text-[11px] font-medium tracking-wide uppercase">Insights</span>
+</a>
+<!-- Settings -->
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-3 py-1.5 hover:text-emerald-700 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined mb-1">settings</span>
+<span class="font-public-sans text-[11px] font-medium tracking-wide uppercase">Settings</span>
+</a>
+</div>
+</nav>
+</body></html>
