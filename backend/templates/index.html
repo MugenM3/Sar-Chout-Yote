@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="AI-powered crop disease detection — upload a leaf image to instantly identify diseases and get treatment advice." />
+    <title>🌿 CropGuard AI — Crop Disease Detection</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════════════════════════════════ NAVBAR ═══ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <div class="nav-brand">
+                <span class="nav-icon">🌿</span>
+                <span class="nav-title">CropGuard <span class="accent">AI</span></span>
+            </div>
+            <div class="nav-links">
+                <a href="#upload-section" class="nav-link">Detect</a>
+                <a href="#diseases-section" class="nav-link">Diseases</a>
+                <a href="/api/docs" target="_blank" class="nav-link">API</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════════════════════ HERO ══════ -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-tag">🤖 Deep Learning · PlantVillage · 38 Classes</div>
+            <h1 class="hero-title">
+                Detect Crop Diseases<br />
+                <span class="gradient-text">Instantly with AI</span>
+            </h1>
+            <p class="hero-subtitle">
+                Upload a photo of any plant leaf and our MobileNetV2 model will identify
+                the disease, confidence score, treatment, and prevention tips in seconds.
+            </p>
+            <div class="hero-stats">
+                <div class="stat"><span class="stat-num">38</span><span class="stat-label">Disease Classes</span></div>
+                <div class="stat-divider"></div>
+                <div class="stat"><span class="stat-num">87K+</span><span class="stat-label">Training Images</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat"><span class="stat-num">14</span><span class="stat-label">Crop Types</span></div>
+            </div>
+        </div>
+        <div class="hero-scroll-hint">↓</div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════ UPLOAD SECTION ════════ -->
+    <section class="upload-section" id="upload-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Upload Leaf Image</h2>
+                <p class="section-subtitle">Drag & drop or click to select a JPG / PNG image</p>
+            </div>
+
+            <div class="upload-grid">
+                <!-- Upload Zone -->
+                <div class="upload-card glass-card" id="upload-zone">
+                    <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.bmp,.webp" hidden />
+
+                    <div class="drop-area" id="drop-area">
+                        <div class="drop-icon">🍃</div>
+                        <p class="drop-title">Drop your leaf image here</p>
+                        <div class="upload-actions">
+                            <button class="btn-upload" id="btn-select">📁 Choose File</button>
+                            <button class="btn-upload btn-outline" id="btn-camera">📸 Take Photo</button>
+                        </div>
+                        <p class="drop-hint">JPG, PNG, BMP, WEBP — max 5 MB</p>
+                    </div>
+
+                    <!-- Camera Area -->
+                    <div class="camera-area" id="camera-area" style="display:none;">
+                        <video id="camera-stream" class="camera-stream" autoplay playsinline></video>
+                        <div class="camera-actions">
+                            <button class="btn-predict" id="btn-capture">📸 Capture</button>
+                            <button class="btn-clear" id="btn-close-camera">✕ Cancel</button>
+                        </div>
+                        <canvas id="camera-canvas" style="display:none;"></canvas>
+                    </div>
+
+                    <!-- Image Preview -->
+                    <div class="preview-area" id="preview-area" style="display:none;">
+                        <img id="preview-img" alt="Uploaded leaf preview" />
+                        <div class="preview-info">
+                            <span id="preview-filename" class="preview-filename"></span>
+                            <span id="preview-size" class="preview-size"></span>
+                        </div>
+                        <div class="preview-actions">
+                            <button class="btn-predict" id="btn-predict">
+                                <span class="btn-icon">🔍</span> Analyze Disease
+                            </button>
+                            <button class="btn-clear" id="btn-clear">✕ Clear</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Result Card -->
+                <div class="result-card glass-card" id="result-card">
+                    <!-- Idle state -->
+                    <div class="result-idle" id="result-idle">
+                        <div class="idle-icon">🌱</div>
+                        <p class="idle-text">Your analysis results will appear here</p>
+                    </div>
+
+                    <!-- Loading spinner -->
+                    <div class="result-loading" id="result-loading" style="display:none;">
+                        <div class="spinner"></div>
+                        <p class="loading-text">Analyzing leaf image...</p>
+                        <p class="loading-sub">Running deep learning model</p>
+                    </div>
+
+                    <!-- Actual result -->
+                    <div class="result-content" id="result-content" style="display:none;">
+                        <!-- Status badge -->
+                        <div class="result-status-row">
+                            <span class="result-status" id="result-status"></span>
+                            <span class="severity-badge" id="severity-badge"></span>
+                        </div>
+
+                        <!-- Disease name -->
+                        <h3 class="result-disease" id="result-disease"></h3>
+                        <p class="result-crop" id="result-crop"></p>
+
+                        <!-- Confidence bar -->
+                        <div class="confidence-section">
+                            <div class="confidence-label">
+                                <span>Confidence Score</span>
+                                <span class="confidence-percent" id="confidence-percent"></span>
+                            </div>
+                            <div class="confidence-bar-bg">
+                                <div class="confidence-bar-fill" id="confidence-bar"></div>
+                            </div>
+                        </div>
+
+                        <!-- Tabs -->
+                        <div class="result-tabs">
+                            <button class="tab-btn active" data-tab="symptoms">Symptoms</button>
+                            <button class="tab-btn" data-tab="solution">Solution</button>
+                            <button class="tab-btn" data-tab="prevention">Prevention</button>
+                        </div>
+                        <div class="tab-content" id="tab-symptoms">
+                            <p id="result-symptoms"></p>
+                        </div>
+                        <div class="tab-content" id="tab-solution" style="display:none;">
+                            <p id="result-solution"></p>
+                        </div>
+                        <div class="tab-content" id="tab-prevention" style="display:none;">
+                            <p id="result-prevention"></p>
+                        </div>
+
+                        <!-- Demo warning -->
+                        <div class="demo-warning" id="demo-warning" style="display:none;">
+                            ⚡ <strong>Demo Mode:</strong> Train the model for real predictions.<br />
+                            <code>python model/train_model.py</code>
+                        </div>
+                    </div>
+
+                    <!-- Error state -->
+                    <div class="result-error" id="result-error" style="display:none;">
+                        <div class="error-icon">⚠️</div>
+                        <p class="error-msg" id="error-msg"></p>
+                        <button class="btn-retry" id="btn-retry">Try Again</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ HISTORY SECTION ═══════════ -->
+    <section class="history-section" id="history-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Recent Predictions</h2>
+                <button class="btn-clear-history" id="btn-clear-history">Clear History</button>
+            </div>
+            <div class="history-grid" id="history-grid">
+                <div class="history-empty" id="history-empty">
+                    <span>📋</span> No predictions yet — upload an image above
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ DISEASES SECTION ══════════ -->
+    <section class="diseases-section" id="diseases-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Detectable Diseases</h2>
+                <p class="section-subtitle">All 38 PlantVillage disease categories this model can identify</p>
+            </div>
+
+            <!-- Search & filter -->
+            <div class="disease-controls">
+                <input type="text" id="disease-search" placeholder="🔍 Search disease or crop..."
+                    class="disease-search" />
+                <select id="severity-filter" class="severity-select">
+                    <option value="">All Severities</option>
+                    <option value="High">🔴 High</option>
+                    <option value="Medium">🟡 Medium</option>
+                    <option value="Low">🟢 Low</option>
+                    <option value="None">✅ Healthy</option>
+                </select>
+            </div>
+
+            <div class="disease-grid" id="disease-grid">
+                <div class="disease-loading">Loading disease database...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ FOOTER ══════ -->
+    <footer class="footer">
+        <div class="container">
+            <p>🌿 <strong>CropGuard AI</strong> — Built with FastAPI · TensorFlow · PlantVillage Dataset</p>
+            <p class="footer-sub">For educational and research purposes · Always consult an agronomist for critical
+                decisions</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/app.js"></script>
+</body>
+
+</html>
