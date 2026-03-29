@@ -27,6 +27,7 @@ const Scan = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileUploadRef = useRef<HTMLInputElement>(null);
   
   const [activeTab, setActiveTab] = useState<"scan" | "history">("scan");
   const [isUploading, setIsUploading] = useState(false);
@@ -82,6 +83,10 @@ const Scan = () => {
     fileInputRef.current?.click();
   };
 
+  const triggerGallery = () => {
+    fileUploadRef.current?.click();
+  };
+
   return (
     <div className="min-h-screen bg-background pb-24">
       <div className="gradient-hero px-5 pt-12 pb-6">
@@ -124,6 +129,13 @@ const Scan = () => {
               ref={fileInputRef}
               onChange={handleFileSelect}
             />
+            <input 
+              type="file" 
+              accept="image/*" 
+              className="hidden" 
+              ref={fileUploadRef}
+              onChange={handleFileSelect}
+            />
             
             <div className="bg-card rounded-2xl border-2 border-dashed border-border p-6 flex flex-col items-center text-center">
               {previewUrl ? (
@@ -158,7 +170,7 @@ const Scan = () => {
                 </Button>
                 <Button 
                   variant="outline" 
-                  onClick={triggerUpload}
+                  onClick={triggerGallery}
                   disabled={isUploading}
                   className="flex-1"
                 >
