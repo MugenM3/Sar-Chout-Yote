@@ -13,14 +13,16 @@ import os
 import logging
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 
 # ── Path setup ─────────────────────────────────────────────────────────────────
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# Dist path is: d:\Sar-Chout-Yote\grow-wise-ai-22\dist
+DIST_DIR = os.path.join(os.path.dirname(BASE_DIR), "grow-wise-ai-22", "dist")
 sys.path.insert(0, BASE_DIR)
 
 # ── Logging ────────────────────────────────────────────────────────────────────
@@ -77,16 +79,32 @@ templates = Jinja2Templates(directory=templates_dir)
 
 # ── Register Routes ────────────────────────────────────────────────────────────
 from routes.prediction import router as prediction_router
-app.include_router(prediction_router, tags=["Disease Detection"])
+app.include_router(prediction_router, prefix="/api", tags=["Disease Detection"])
 
 
-# ── Frontend Routes ────────────────────────────────────────────────────────────
+# ── Frontend Routes (React SPA Catch-all) ──────────────────────────────────────
 
-@app.get("/", response_class=HTMLResponse, tags=["Frontend"])
-async def index(request: Request):
-    """Serve the main web application page."""
-    # Newer Starlette/FastAPI requires request as named arg, not in context dict
-    return templates.TemplateResponse(request=request, name="index.html")
+# Mount /assets specifically for React's built CSS/JS
+if os.path.exists(os.path.join(DIST_DIR, "assets")):
+    app.mount("/assets", StaticFiles(directory=os.path.join(DIST_DIR, "assets")), name="react-assets")
+
+@app.get("/{full_path:path}", tags=["Frontend"])
+async def serve_react_app(full_path: str):
+    """Serve the React application and handle client-side routing."""
+    # If the request is for an existing file in 'dist' (like favicon.ico), serve it
+    file_path = os.path.join(DIST_DIR, full_path)
+    if os.path.isfile(file_path):
+        return FileResponse(file_path)
+    
+    # Otherwise, return 'index.html' for React Router to take over
+    index_file = os.path.join(DIST_DIR, "index.html")
+    if os.path.exists(index_file):
+        return FileResponse(index_file)
+    
+    return JSONResponse(
+        status_code=404,
+        content={"error": "Frontend build not found. Run 'npm run build' in the frontend directory."}
+    )
 
 
 # ── Health Check ───────────────────────────────────────────────────────────────
@@ -133,7 +151,7 @@ if __name__ == "__main__":
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
-        port=8000,
+        port=8080,
         reload=True,           # Auto-reload on code changes (dev mode)
         log_level="info"
     )

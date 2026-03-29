@@ -51,7 +51,7 @@ const Scan = () => {
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://192.168.1.23:8000/predict", {
+      const response = await fetch("/api/predict", {
         method: "POST",
         body: formData,
       });
@@ -119,6 +119,7 @@ const Scan = () => {
             <input 
               type="file" 
               accept="image/*" 
+              capture="environment"
               className="hidden" 
               ref={fileInputRef}
               onChange={handleFileSelect}
